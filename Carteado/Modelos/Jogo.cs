@@ -39,17 +39,7 @@ class Jogo<T> where T : ICarta
         // VerificarGanhador();
         VerificarGanhadorNaipe();
     }
-/*
-        public void JogarComNaipe()
-    {
-        // neste momento baralho já foi embaralhado corretamente, a lista possui as cartas com naipe e com NaipePeso
-        Baralho.Embaralhar();
-        Jogador1.PegarNovoItem(Baralho.Entregar());
-        Jogador2.PegarNovoItem(Baralho.Entregar());
 
-        VerificarGanhador();
-    }
-    */
 
     private void VerificarGanhador()
     {
@@ -80,40 +70,99 @@ class Jogo<T> where T : ICarta
 
         int escolhaJogador = NovaTelaJogo();
 
-        // Comandos para escolha da Carta 1
-        Console.WriteLine($"Sua carta escolhida é : {cartaJogador1.Valor} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} Num total de {pontosCarta1} Pontos!");
-
-        // Comandos para escolha da Carta 2
-        Console.WriteLine($"Sua carta escolhida é : {cartaJogador2.Valor} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} Num total de {pontosCarta2} Pontos!");
-
         if (escolhaJogador == 1)
         {
-            if (pontosCarta1 > pontosCarta2)
+            Console.Write("Sua carta escolhida é : ");
+            if (PesoNaipeCalculado(cartaJogador1.NaipeIndex) <= 1)
             {
-                Console.WriteLine($"Você Ganhou! Parabéns!");
-            }
-            else if (pontosCarta1 == pontosCarta2)
-            {
-                Console.WriteLine($"Empate em pontos, você perdeu!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{ExibeValorCarta(cartaJogador1.Valor)} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} ");
+                Console.ResetColor();
             }
             else
             {
+                Console.Write($"{ExibeValorCarta(cartaJogador1.Valor)} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} ");
+            }
+            Console.Write($"Num total de {pontosCarta1} Pontos!\n");
+
+            Console.Write("A outra carta é : ");
+            if (PesoNaipeCalculado(cartaJogador2.NaipeIndex) <= 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{ExibeValorCarta(cartaJogador2.Valor)} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} ");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write($"{ExibeValorCarta(cartaJogador2.Valor)} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} ");
+            }
+            Console.Write($"Num total de {pontosCarta2} Pontos!\n");
+
+            if (pontosCarta1 > pontosCarta2)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Você Ganhou! Parabéns!");
+                Console.ResetColor();
+            }
+            else if (pontosCarta1 == pontosCarta2)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;                
+                Console.WriteLine($"Empate em pontos, você perdeu!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;                
                 Console.WriteLine($"Você Perdeu! Melhor sorte na próxima!");
+                Console.ResetColor();
             }
         }
         else if (escolhaJogador == 2)
         {
-            if (pontosCarta2 > pontosCarta1)
+            
+            Console.Write("Sua carta escolhida é : ");
+            if (PesoNaipeCalculado(cartaJogador2.NaipeIndex) <= 1)
             {
-                Console.WriteLine($"Você Ganhou! Parabéns!");
-            }
-            else if (pontosCarta1 == pontosCarta2)
-            {
-                Console.WriteLine($"Empate em pontos, você perdeu!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{ExibeValorCarta(cartaJogador2.Valor)} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} ");
+                Console.ResetColor();
             }
             else
             {
+                Console.Write($"{ExibeValorCarta(cartaJogador2.Valor)} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} ");
+            }
+            Console.Write($"Num total de {pontosCarta2} Pontos!\n");
+
+            Console.Write("A outra carta é : ");
+            if (PesoNaipeCalculado(cartaJogador1.NaipeIndex) <= 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{ExibeValorCarta(cartaJogador1.Valor)} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} ");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write($"{ExibeValorCarta(cartaJogador1.Valor)} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} ");
+            }
+            Console.Write($"Num total de {pontosCarta1} Pontos!\n");
+
+            if (pontosCarta2 > pontosCarta1)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Você Ganhou! Parabéns!");
+                Console.ResetColor();
+            }
+            else if (pontosCarta1 == pontosCarta2)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"Empate em pontos, você perdeu!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"Você Perdeu! Melhor sorte na próxima!");
+                Console.ResetColor();
             }
         }
         else
@@ -126,7 +175,6 @@ class Jogo<T> where T : ICarta
     {
         string cartaValorConvertida = cartaValor.ToString();
 
-        //string cartaValor = "0";
         if (cartaValorConvertida == "1")
         {
             cartaValorConvertida = "A";
@@ -191,11 +239,10 @@ class Jogo<T> where T : ICarta
 
         while (escolhaCarta < 1 || escolhaCarta > 2)
         {
-            //Console.Clear(); // -> Desfazer comentário
+            Console.Clear();
             Console.WriteLine("Bem Vindo!");
             Console.WriteLine("Este é o jogo Carta Maior CaixaVerso!\n");
             Console.WriteLine("Desta vez a ordem crescente de valor dos Naipes das Cartas é:");
-            //Console.Write($" {naipes[0]} - Peso: {pesosSorteados[0]}\t {naipes[1]} - Peso: {pesosSorteados[1]}\t {naipes[2]} - Peso: {pesosSorteados[2]}\t {naipes[3]} - Peso: {pesosSorteados[3]}");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write($"{naipes[1]} - Peso: {pesosSorteados[1]}    ");
             Console.ResetColor();
@@ -206,8 +253,31 @@ class Jogo<T> where T : ICarta
             Console.Write($"{naipes[3]} - Peso: {pesosSorteados[3]}\n");
             Console.WriteLine("");
             Console.WriteLine("Qual Carta você escolhe?");
-            //Console.WriteLine($"\t\t{cartaJogador1.Valor}\t\t\t{cartaJogador2.Valor}");
-            Console.WriteLine($"          Carta 1 : {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]}\t\t     Carta 2 : {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]}");
+
+            if (PesoNaipeCalculado(cartaJogador1.NaipeIndex) <= 1)
+            {
+                Console.Write("          Carta 1 : ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]}\t\t");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write($"          Carta 1 : {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]}\t\t");
+            }
+
+            if (PesoNaipeCalculado(cartaJogador2.NaipeIndex) <= 1)
+            {
+                Console.Write("          Carta 2 : ");                
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]}\n");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write($"     Carta 2 : {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]}\n");
+            }
+
             Console.WriteLine("Você ganha o jogo se sua carta tiver uma pontuação final maior que a não escolhida.");
             Console.WriteLine("Digite 1 ou 2 pra escolher sua carta:");
             string? escolhaUsuario = Console.ReadLine();
