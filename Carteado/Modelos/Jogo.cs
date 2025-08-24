@@ -78,10 +78,6 @@ class Jogo<T> where T : ICarta
         double pontosCarta1 = cartaJogador1.Valor * cartaJogador1.pesosSorteados[PesoNaipeCalculado(cartaJogador1.NaipeIndex)];
         double pontosCarta2 = cartaJogador2.Valor * cartaJogador1.pesosSorteados[PesoNaipeCalculado(cartaJogador2.NaipeIndex)];
 
-
-        //double pontosCarta1 = Jogador1.Carta.Valor * Jogador1.Carta.NaipePeso;
-        //double pontosCarta2 = Jogador2.Carta.Valor * Jogador2.Carta.NaipePeso;
-
         int escolhaJogador = NovaTelaJogo();
 
         // Comandos para escolha da Carta 1
@@ -90,14 +86,35 @@ class Jogo<T> where T : ICarta
         // Comandos para escolha da Carta 2
         Console.WriteLine($"Sua carta escolhida é : {cartaJogador2.Valor} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} Num total de {pontosCarta2} Pontos!");
 
-
         if (escolhaJogador == 1)
         {
-            Console.WriteLine($"Jogador 1 ganhou! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
+            if (pontosCarta1 > pontosCarta2)
+            {
+                Console.WriteLine($"Você Ganhou! Parabéns!");
+            }
+            else if (pontosCarta1 == pontosCarta2)
+            {
+                Console.WriteLine($"Empate em pontos, você perdeu!");
+            }
+            else
+            {
+                Console.WriteLine($"Você Perdeu! Melhor sorte na próxima!");
+            }
         }
         else if (escolhaJogador == 2)
         {
-            Console.WriteLine($"Jogador 2 ganhou! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
+            if (pontosCarta2 > pontosCarta1)
+            {
+                Console.WriteLine($"Você Ganhou! Parabéns!");
+            }
+            else if (pontosCarta1 == pontosCarta2)
+            {
+                Console.WriteLine($"Empate em pontos, você perdeu!");
+            }
+            else
+            {
+                Console.WriteLine($"Você Perdeu! Melhor sorte na próxima!");
+            }
         }
         else
         {
@@ -178,10 +195,19 @@ class Jogo<T> where T : ICarta
             Console.WriteLine("Bem Vindo!");
             Console.WriteLine("Este é o jogo Carta Maior CaixaVerso!\n");
             Console.WriteLine("Desta vez a ordem crescente de valor dos Naipes das Cartas é:");
-            Console.Write($" {naipes[0]} - Peso: {pesosSorteados[0]}\t {naipes[1]} - Peso: {pesosSorteados[1]}\t {naipes[2]} - Peso: {pesosSorteados[2]}\t {naipes[3]} - Peso: {pesosSorteados[3]}");
+            //Console.Write($" {naipes[0]} - Peso: {pesosSorteados[0]}\t {naipes[1]} - Peso: {pesosSorteados[1]}\t {naipes[2]} - Peso: {pesosSorteados[2]}\t {naipes[3]} - Peso: {pesosSorteados[3]}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{naipes[1]} - Peso: {pesosSorteados[1]}    ");
+            Console.ResetColor();
+            Console.Write($"{naipes[2]} - Peso: {pesosSorteados[2]}    ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"{naipes[0]} - Peso: {pesosSorteados[0]}    ");
+            Console.ResetColor();
+            Console.Write($"{naipes[3]} - Peso: {pesosSorteados[3]}\n");
             Console.WriteLine("");
             Console.WriteLine("Qual Carta você escolhe?");
-            Console.WriteLine($"\t\t{cartaJogador1.Valor}\t\t\t{cartaJogador2.Valor}");
+            //Console.WriteLine($"\t\t{cartaJogador1.Valor}\t\t\t{cartaJogador2.Valor}");
+            Console.WriteLine($"          Carta 1 : {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]}\t\t     Carta 2 : {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]}");
             Console.WriteLine("Você ganha o jogo se sua carta tiver uma pontuação final maior que a não escolhida.");
             Console.WriteLine("Digite 1 ou 2 pra escolher sua carta:");
             string? escolhaUsuario = Console.ReadLine();
