@@ -15,14 +15,14 @@ namespace Modelos;
 
 using Interfaces;
 
-class Jogo<T>
+class Jogo<T> where T : ICarta
 {
     // neste momento já foi atribuído o naipe, porém, pontuação já é igual a carta
-    private IBaralho<T> Baralho { get; set; }
-    private IJogador<T> Jogador1 { get; set; }
-    private IJogador<T> Jogador2 { get; set; }
+    private IBaralho<ICarta> Baralho { get; set; }
+    private IJogador<ICarta> Jogador1 { get; set; }
+    private IJogador<ICarta> Jogador2 { get; set; }
 
-    public Jogo(IBaralho<T> baralho, IJogador<T> jogador1, IJogador<T> jogador2)
+    public Jogo(IBaralho<ICarta> baralho, IJogador<ICarta> jogador1, IJogador<ICarta> jogador2)
     {
         Baralho = baralho;
         Jogador1 = jogador1;
@@ -41,7 +41,7 @@ class Jogo<T>
 
     private void VerificarGanhador()
     {
-
+        // No momento possuo baralho correto, Jogador1 e Jogador2 tendo Cartas, e não somente pontos
         if (Jogador1.Pontos > Jogador2.Pontos)
         {
             Console.WriteLine($"Jogador 1 ganhou! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
@@ -59,9 +59,7 @@ class Jogo<T>
     private void VerificarGanhadorNaipe()
     {
 
-        //double pontosCarta1 = (Jogador1.Pontos * Jogador1.NaipePeso);
-        //double pontosCarta2 = (Jogador2.Pontos * Jogador2.NaipePeso);
-
+        double pontosCarta1 = Jogador1.Carta.Valor * Jogador1.Carta.NaipePeso;
 
         if (Jogador1.Pontos > Jogador2.Pontos)
         {

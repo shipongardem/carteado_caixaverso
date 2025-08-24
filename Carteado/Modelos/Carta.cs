@@ -26,12 +26,12 @@ class CartaComMultiplicador : Carta
     public override double Pontos { get { return base.Pontos * Multiplicador; } }
 }
 
-class CartaComNaipe : Carta
+class CartaComNaipe : Carta, ICarta
 {
     public static readonly char[] Naipe = { '\u2665', '\u2666', '\u2660', '\u2663' };
     public int NaipeIndex { get; private set; }
-    public char SimboloNaipe => Naipe[NaipeIndex];
-    public double[] NaipePeso { get; private set; }
+    private double[] pesosSorteados;
+
     // "Copas", '\u2665'
     // "Ouros", '\u2666'
     // "Espadas", '\u2660'
@@ -40,35 +40,30 @@ class CartaComNaipe : Carta
     public CartaComNaipe(double valor, int naipeIndex) : base(valor)
     {
         NaipeIndex = naipeIndex;
-        NaipePeso = new double[] { 3.5, 4.0, 4.5, 5.0 };
-        NaipePeso = SorteiaNaipePeso(NaipePeso);
+        pesosSorteados = SorteiaNaipePeso(new double[] { 3.5, 4.0, 4.5, 5.0 });
     }
 
+    public double NaipePeso => pesosSorteados[NaipeIndex];
+    public char SimboloNaipe => Naipe[NaipeIndex];
 
     public override double Pontos
-    { get { return base.Pontos; } 
-        /*
-        get
-        {
-            double multiplicador = NaipePeso[NaipeIndex];
-            return base.Pontos * multiplicador;
-        }
-        */
+    {
+        get { return base.Pontos; }
     }
 
-    double[] SorteiaNaipePeso(double[] sorteiaNaipePeso)
+    double[] SorteiaNaipePeso(double[] pesos)
     {
         Random pesoRandom = new Random();
-        int n = NaipePeso.Length;
+        int n = pesos.Length;
         while (n > 1)
         {
             n--;
             int k = pesoRandom.Next(n + 1);
-            double temp = sorteiaNaipePeso[k];
-            sorteiaNaipePeso[k] = sorteiaNaipePeso[n];
-            sorteiaNaipePeso[n] = temp;
+            double temp = pesos[k];
+            pesos[k] = pesos[n];
+            pesos[n] = temp;
         }
-        return sorteiaNaipePeso;
+        return pesos;
     }
-
+    public new double Valor => base.Valor;
 }

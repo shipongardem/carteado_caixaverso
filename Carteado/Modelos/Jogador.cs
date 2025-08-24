@@ -2,15 +2,16 @@ using Interfaces;
 
 namespace Modelos
 {
-    class Jogador<T> : IJogador<T> where T : IPontuacao
+    class Jogador : IJogador<ICarta>
     {
-        private T Item { get; set; }
-
+        public ICarta? Item { get; set; }
+        //public ICarta Item { get; set; }
         public double Pontos => Item.Pontos;
 
-        public void PegarNovoItem(T item)
+        public void PegarNovoItem(ICarta item)
         {
             Item = item;
         }
+        public ICarta Carta => Item;
     }
 }

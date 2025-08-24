@@ -23,6 +23,7 @@ Peso    [ 3.5 ] [ 4.0 ] [ 4.5 ] [ 5.0 ]
 
 namespace Carteado
 {
+    using Interfaces;
     using Modelos;
 
     class Program
@@ -52,9 +53,9 @@ namespace Carteado
                 return cartas;
             }
 
-            List<Carta> CriarCartasComNaipe()
+            List<ICarta> CriarCartasComNaipe()
             {
-                List<Carta> cartas = new List<Carta>();
+                List<ICarta> cartas = new List<ICarta>();
                 //char[] naipe = CartaComNaipe.Naipe;
                 for (int i = 1; i <= 13; i++)
                 {
@@ -67,9 +68,9 @@ namespace Carteado
             }
 
             //Baralho baralho = new Baralho(CriarCartas());
-            Baralho<Carta> baralho = new Baralho<Carta>(CriarCartasComNaipe());
+            Baralho<ICarta> baralho = new Baralho<ICarta>(CriarCartasComNaipe());
 
-            Jogo<Carta> jogo = new Jogo<Carta>(baralho, new Jogador<Carta>(), new Jogador<Carta>());
+            Jogo<ICarta> jogo = new Jogo<ICarta>(baralho, new Jogador(), new Jogador());
             jogo.Jogar();
         }
     }
