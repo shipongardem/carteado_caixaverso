@@ -6,7 +6,7 @@ namespace Modelos
     {
         private T Item { get; set; }
 
-        public int Pontos => Item.Pontos;
+        public double Pontos => Item.Pontos;
 
         public void PegarNovoItem(T item)
         {

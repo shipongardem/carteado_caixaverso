@@ -2,5 +2,5 @@ namespace Interfaces;
 
 interface IPontuacao
 {
-    int Pontos { get; }
+    double Pontos { get; }
 }
