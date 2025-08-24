@@ -2,7 +2,7 @@ using Interfaces;
 
 namespace Modelos;
 
-class Carta : IPontuacao
+public class Carta : IPontuacao
 {
     public double Valor { get; private set; }
 
@@ -26,11 +26,11 @@ class CartaComMultiplicador : Carta
     public override double Pontos { get { return base.Pontos * Multiplicador; } }
 }
 
-class CartaComNaipe : Carta, ICarta
+public class CartaComNaipe : Carta, ICarta
 {
     public static readonly char[] Naipe = { '\u2665', '\u2666', '\u2660', '\u2663' };
     public int NaipeIndex { get; private set; }
-    private double[] pesosSorteados;
+    public double[] pesosSorteados;
 
     // "Copas", '\u2665'
     // "Ouros", '\u2666'
@@ -39,8 +39,11 @@ class CartaComNaipe : Carta, ICarta
 
     public CartaComNaipe(double valor, int naipeIndex) : base(valor)
     {
+        if (pesosSorteados == null)
+        {
+            pesosSorteados = SorteiaNaipePeso(new double[] { 3.5, 4.0, 4.5, 5.0 });
+        }
         NaipeIndex = naipeIndex;
-        pesosSorteados = SorteiaNaipePeso(new double[] { 3.5, 4.0, 4.5, 5.0 });
     }
 
     public double NaipePeso => pesosSorteados[NaipeIndex];
@@ -51,7 +54,10 @@ class CartaComNaipe : Carta, ICarta
         get { return base.Pontos; }
     }
 
-    double[] SorteiaNaipePeso(double[] pesos)
+    private static double[] SorteiaNaipePeso(double[] pesos)
+    // teoricamente o Static faz com que somente ocorra 1 sorteio ao todo, 
+    // pois assim que for criado o array o static impede de sobreposição
+
     {
         Random pesoRandom = new Random();
         int n = pesos.Length;

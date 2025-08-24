@@ -59,6 +59,12 @@ namespace Carteado
                 //char[] naipe = CartaComNaipe.Naipe;
                 for (int i = 1; i <= 13; i++)
                 {
+                    /* --> testado não funcionou desta forma
+                    for (int j = 0; i <= 3; j++)
+                    {
+                        cartas.Add(new CartaComNaipe(i, j));
+                    }
+                    */
                     foreach (char naipe in CartaComNaipe.Naipe)
                     {
                         cartas.Add(new CartaComNaipe(i, naipe));
@@ -72,6 +78,7 @@ namespace Carteado
 
             Jogo<ICarta> jogo = new Jogo<ICarta>(baralho, new Jogador(), new Jogador());
             jogo.Jogar();
+            
         }
     }
 }

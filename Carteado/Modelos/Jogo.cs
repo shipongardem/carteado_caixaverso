@@ -36,8 +36,20 @@ class Jogo<T> where T : ICarta
         Jogador1.PegarNovoItem(Baralho.Entregar());
         Jogador2.PegarNovoItem(Baralho.Entregar());
 
+        // VerificarGanhador();
+        VerificarGanhadorNaipe();
+    }
+/*
+        public void JogarComNaipe()
+    {
+        // neste momento baralho já foi embaralhado corretamente, a lista possui as cartas com naipe e com NaipePeso
+        Baralho.Embaralhar();
+        Jogador1.PegarNovoItem(Baralho.Entregar());
+        Jogador2.PegarNovoItem(Baralho.Entregar());
+
         VerificarGanhador();
     }
+    */
 
     private void VerificarGanhador()
     {
@@ -59,67 +71,122 @@ class Jogo<T> where T : ICarta
     private void VerificarGanhadorNaipe()
     {
 
-        double pontosCarta1 = Jogador1.Carta.Valor * Jogador1.Carta.NaipePeso;
+        var cartaJogador1 = Jogador1.Carta as CartaComNaipe;
+        var cartaJogador2 = Jogador2.Carta as CartaComNaipe;
+        double[] pesosSorteados = cartaJogador1.pesosSorteados;
+        char[] naipes = CartaComNaipe.Naipe;
+        double pontosCarta1 = cartaJogador1.Valor * cartaJogador1.pesosSorteados[PesoNaipeCalculado(cartaJogador1.NaipeIndex)];
+        double pontosCarta2 = cartaJogador2.Valor * cartaJogador1.pesosSorteados[PesoNaipeCalculado(cartaJogador2.NaipeIndex)];
 
-        if (Jogador1.Pontos > Jogador2.Pontos)
+
+        //double pontosCarta1 = Jogador1.Carta.Valor * Jogador1.Carta.NaipePeso;
+        //double pontosCarta2 = Jogador2.Carta.Valor * Jogador2.Carta.NaipePeso;
+
+        int escolhaJogador = NovaTelaJogo();
+
+        // Comandos para escolha da Carta 1
+        Console.WriteLine($"Sua carta escolhida é : {cartaJogador1.Valor} {naipes[PesoNaipeCalculado(cartaJogador1.NaipeIndex)]} Num total de {pontosCarta1} Pontos!");
+
+        // Comandos para escolha da Carta 2
+        Console.WriteLine($"Sua carta escolhida é : {cartaJogador2.Valor} {naipes[PesoNaipeCalculado(cartaJogador2.NaipeIndex)]} Num total de {pontosCarta2} Pontos!");
+
+
+        if (escolhaJogador == 1)
         {
             Console.WriteLine($"Jogador 1 ganhou! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
         }
-        else if (Jogador2.Pontos > Jogador1.Pontos)
+        else if (escolhaJogador == 2)
         {
             Console.WriteLine($"Jogador 2 ganhou! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
         }
         else
         {
-            Console.WriteLine($"Empate! Carta: {Jogador1.Pontos} vs Carta: {Jogador2.Pontos}");
+            Console.WriteLine($"Jogo será encerrado.");
         }
     }
 
-    private string ExibeValorCarta()
+    private string ExibeValorCarta(double cartaValor)
     {
-        //string cartaValor = Carta.Valor.ToString();
-        string cartaValor = "0";
-        if (cartaValor == "1")
+        string cartaValorConvertida = cartaValor.ToString();
+
+        //string cartaValor = "0";
+        if (cartaValorConvertida == "1")
         {
-            cartaValor = "A";
+            cartaValorConvertida = "A";
         }
-        else if (cartaValor == "11")
+        else if (cartaValorConvertida == "11")
         {
-            cartaValor = "J";
+            cartaValorConvertida = "J";
         }
-        else if (cartaValor == "12")
+        else if (cartaValorConvertida == "12")
         {
-            cartaValor = "Q";
+            cartaValorConvertida = "Q";
         }
-        else if (cartaValor == "13")
+        else if (cartaValorConvertida == "13")
         {
-            cartaValor = "K";
+            cartaValorConvertida = "K";
         }
-        return cartaValor;
+        return cartaValorConvertida;
     }
 
-    public void NovaTelaJogo()
+    public int PesoNaipeCalculado(int naipeIndex)
     {
-        Console.Clear();
-        Console.WriteLine("Bem Vindo!");
-        Console.WriteLine("Este é o jogo Carta Maior CaixaVerso!\n");
-        Console.WriteLine($"O Naipe das Cartas é \n\tCarta 1 {Jogador1.Pontos} \tvs Carta 2: {Jogador2.Pontos}\n");
-        Console.WriteLine("Desta vez a ordem crescente de valor dos Naipes das Cartas é:");
-        //Console.WriteLine($"Naipe0\tNaipe1\tNaipe2\tNaipe3");
-        Console.WriteLine($"{CartaComNaipe.Naipe[0]}\t{CartaComNaipe.Naipe[1]}\t{CartaComNaipe.Naipe[2]}\t{CartaComNaipe.Naipe[3]}");
-        Console.WriteLine("");
-        Console.WriteLine("Qual Carta você escolhe?");
-        Console.WriteLine("Você ganha o jogo se sua carta tiver uma pontuação final maior que a não escolhida.");
-        Console.WriteLine("Digite 1 ou 2 pra escolher sua carta:");
-        string? escolhaUsuario = Console.ReadLine();
-        int.TryParse(escolhaUsuario, out int escolhaCarta);
+        //var cartaJogador1 = Jogador1.Carta as CartaComNaipe;
+        //var[] retornoNaipe = new[] { cartaJogador1.}
+        switch (naipeIndex)
+        {
+            case 9829:
+                {
+                    // CartaComNaipe.pesosSorteados[0];
+                    return 0;
+                    // break;
+                }
+            case 9830:
+                {
+                    // CartaComNaipe.pesosSorteados[1];
+                    return 1;
+                    // break;
+                }
+            case 9824:
+                {
+                    // CartaComNaipe.pesosSorteados[2];
+                    return 2;
+                    // break;
+                }
+            case 9827:
+                {
+                    return 3;
+                    // CartaComNaipe.pesosSorteados[3];
+                    // break;
+                }
+        }
+
+        return 1;
+    }
+
+    public int NovaTelaJogo()
+    {
+        int escolhaCarta = 0; // --> Não mexer
+        var cartaJogador1 = Jogador1.Carta as CartaComNaipe;
+        var cartaJogador2 = Jogador2.Carta as CartaComNaipe;
+        double[] pesosSorteados = cartaJogador1.pesosSorteados;
+        char[] naipes = CartaComNaipe.Naipe;
+
         while (escolhaCarta < 1 || escolhaCarta > 2)
         {
-            escolhaUsuario = Console.ReadLine();
+            //Console.Clear(); // -> Desfazer comentário
+            Console.WriteLine("Bem Vindo!");
+            Console.WriteLine("Este é o jogo Carta Maior CaixaVerso!\n");
+            Console.WriteLine("Desta vez a ordem crescente de valor dos Naipes das Cartas é:");
+            Console.Write($" {naipes[0]} - Peso: {pesosSorteados[0]}\t {naipes[1]} - Peso: {pesosSorteados[1]}\t {naipes[2]} - Peso: {pesosSorteados[2]}\t {naipes[3]} - Peso: {pesosSorteados[3]}");
+            Console.WriteLine("");
+            Console.WriteLine("Qual Carta você escolhe?");
+            Console.WriteLine($"\t\t{cartaJogador1.Valor}\t\t\t{cartaJogador2.Valor}");
+            Console.WriteLine("Você ganha o jogo se sua carta tiver uma pontuação final maior que a não escolhida.");
+            Console.WriteLine("Digite 1 ou 2 pra escolher sua carta:");
+            string? escolhaUsuario = Console.ReadLine();
             int.TryParse(escolhaUsuario, out escolhaCarta);
         }
-
-
+        return escolhaCarta;
     }
-
 }
